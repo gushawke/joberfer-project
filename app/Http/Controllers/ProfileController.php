@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\User;
+
 
 class ProfileController extends Controller
 {
@@ -60,4 +62,33 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function sendConnectionRequest(Request $request, $userId)
+    {
+        $requestUser = $request->user(); // User sending the request
+        $targetUser = User::find($userId); // User to connect with
+    
+        // Add the connection
+        $requestUser->connections()->attach($userId);
+    
+        // Redirect back to the AllUsersPage (or any other page as needed)
+        return Inertia::location(route('all-users'));
+    
+        // You can also include a success message if needed
+        return Inertia::location(route('all-users'))->with('success', 'Connection request sent');
+    }
+
+  
+     // List all connections
+     public function listConnections(Request $request)
+     {
+         $user = $request->user(); // Authenticated user
+     
+         // Fetch user connections with their tags
+         $connections = $user->connections()->with('tags')->get();
+     
+         return Inertia::render('ConnectionsPage', ['connections' => $connections]);
+     }
+
+     
 }

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('bio')->nullable(); // Adding a 'bio' column, nullable as it's optional
+            $table->string('profile_picture_url')->nullable(); // Adding a 'profile_picture_url' column, nullable
             $table->rememberToken();
             $table->timestamps();
         });
