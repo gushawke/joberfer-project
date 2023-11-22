@@ -10,8 +10,9 @@ class JobSeeder extends Seeder
 {
     public function run(): void
     {
-        Job::truncate();
-        Tag::truncate(); // Assuming you want to reset tags as well
+        // If you're using PostgreSQL, you can use the "truncateCascade" method
+        $this->truncateCascade(Job::class);
+        $this->truncateCascade(Tag::class);
 
         // Create some tags
         $tags = [
@@ -51,5 +52,11 @@ class JobSeeder extends Seeder
             $tagIds = Tag::whereIn('name', $jobData['tags'])->pluck('id');
             $job->tags()->attach($tagIds);
         }
+    }
+
+    // Helper method to truncate tables with foreign keys
+    private function truncateCascade($table): void
+    {
+        \DB::statement('TRUNCATE ' . $table::getTableName() . ' CASCADE');
     }
 }
