@@ -1,6 +1,8 @@
 <?php
 
 namespace Database\Seeders;
+$faker = \Faker\Factory::create();
+
 
 use App\Models\User;
 use App\Models\Tag;

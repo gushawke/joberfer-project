@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+
+
 use Illuminate\Database\Seeder;
 use App\Models\Job;
 use App\Models\Tag;
