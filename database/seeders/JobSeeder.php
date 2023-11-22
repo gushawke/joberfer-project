@@ -2,17 +2,15 @@
 
 namespace Database\Seeders;
 
-
-
 use Illuminate\Database\Seeder;
 use App\Models\Job;
 use App\Models\Tag;
+use Illuminate\Support\Facades\DB;
 
 class JobSeeder extends Seeder
 {
     public function run(): void
     {
-        // If you're using PostgreSQL, you can use the "truncateCascade" method
         $this->truncateCascade(Job::class);
         $this->truncateCascade(Tag::class);
 
@@ -56,9 +54,11 @@ class JobSeeder extends Seeder
         }
     }
 
-    // Helper method to truncate tables with foreign keys
-    private function truncateCascade($table): void
+  
+    private function truncateCascade(string $modelClass): void
     {
-        \DB::statement('TRUNCATE ' . $table::getTableName() . ' CASCADE');
+        $modelInstance = new $modelClass;
+        $tableName = $modelInstance->getTable();
+        DB::statement('TRUNCATE ' . $tableName . ' CASCADE');
     }
 }

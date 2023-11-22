@@ -1,12 +1,11 @@
 <?php
 
 namespace Database\Seeders;
-$faker = \Faker\Factory::create();
 
-
+use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Tag;
-use Illuminate\Database\Seeder;
+use Faker\Factory as Faker;
 
 class UsersTableSeeder extends Seeder
 {
@@ -15,7 +14,6 @@ class UsersTableSeeder extends Seeder
         // Reset the users and their tags
         User::query()->delete();
 
-        // Check if any tags exist, if not create some default tags
         if (Tag::count() == 0) {
             $defaultTags = ['Laravel', 'React', 'Adobe Creative Suite', 'Data Visualization', 'SQL'];
             foreach ($defaultTags as $tagName) {
@@ -27,8 +25,7 @@ class UsersTableSeeder extends Seeder
 
         // Create users and assign tags
         User::factory(50)->create()->each(function ($user) use ($tags) {
-            // Attach a random set of tags to each user
-            // Use random ids instead of the entire Tag collection
+
             $randomTags = $tags->random(rand(1, 3))->pluck('id')->toArray();
             $user->tags()->attach($randomTags);
         });
