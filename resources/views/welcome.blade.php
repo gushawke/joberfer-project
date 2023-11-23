@@ -8,7 +8,7 @@
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="{{ asset('build/assets/app-8ccbb554.css') }}" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
         <!-- Styles -->
         <style>
